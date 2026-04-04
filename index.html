@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AnRat OS - Защищенная операционная система</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0f0a 0%, #1a2a1a 100%);
+            color: #fff;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .logo {
+            text-align: center;
+            padding: 50px 0;
+        }
+        
+        .logo pre {
+            color: #00ff00;
+            font-size: 12px;
+            line-height: 1.2;
+            display: inline-block;
+            text-align: left;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #00ff00;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        
+        .subtitle {
+            text-align: center;
+            font-size: 20px;
+            color: #ccc;
+            margin-bottom: 50px;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+        
+        .card {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid #00ff00;
+            border-radius: 10px;
+            padding: 25px;
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+        }
+        
+        .card h3 {
+            color: #00ff00;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        
+        .card p {
+            color: #ddd;
+            line-height: 1.6;
+        }
+        
+        .download-btn {
+            text-align: center;
+            margin: 50px 0;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #00ff00;
+            color: #0a0f0a;
+            font-size: 24px;
+            font-weight: bold;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background: #00cc00;
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
+        }
+        
+        .status {
+            text-align: center;
+            color: #00ff00;
+            margin: 20px 0;
+            animation: blink 2s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            color: #666;
+            border-top: 1px solid #333;
+            margin-top: 50px;
+        }
+        
+        .made {
+            color: #00ff00;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .logo pre {
+                font-size: 8px;
+                padding: 10px;
+            }
+            h1 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <pre>
+    ╔══════════════════════════════╗
+    ║                              ║
+    ║         A     R              ║
+    ║        ║ \   / ║             ║
+    ║        ║  \ /  ║             ║
+    ║        ║   █   ║             ║
+    ║        ║  / \  ║             ║
+    ║        ║ /   \ ║             ║
+    ║         A     R              ║
+    ║                              ║
+    ║           ANRAT              ║
+    ╚══════════════════════════════╝
+            </pre>
+        </div>
+        
+        <h1>AnRat OS</h1>
+        <div class="subtitle">Защищенная операционная система на базе Windows 11</div>
+        
+        <div class="status">
+            ⚡ Сделано Кобиловым ⚡
+        </div>
+        
+        <div class="features">
+            <div class="card">
+                <h3>🛡️ Максимальная защита</h3>
+                <p>Встроенная защита от программ-вымогателей. Контролируемый доступ к папкам.</p>
+            </div>
+            <div class="card">
+                <h3>🗑️ Чистая система</h3>
+                <p>Автоматическое удаление Xbox, Bing, Skype, Spotify и других ненужных приложений.</p>
+            </div>
+            <div class="card">
+                <h3>⚡ Оптимизация</h3>
+                <p>Ускорение автозагрузки, очистка мусора, оптимизация интернета.</p>
+            </div>
+            <div class="card">
+                <h3>🟢 Kaspersky Free</h3>
+                <p>Предустановка бесплатного антивируса Kaspersky.</p>
+            </div>
+            <div class="card">
+                <h3>💎 Premium версия</h3>
+                <p>44 функции: игровой оверлей, менеджер паролей, живые обои и многое другое.</p>
+            </div>
+            <div class="card">
+                <h3>💚 Сделано с любовью</h3>
+                <p>Разработано Кобиловым для тех, кто ценит безопасность и порядок.</p>
+            </div>
+        </div>
+        
+        <div class="download-btn">
+            <a href="#" class="btn" id="downloadBtn">⬇️ СКАЧАТЬ AnRat</a>
+        </div>
+        
+        <div class="features" style="margin-top: 20px;">
+            <div class="card">
+                <h3>📖 Как установить</h3>
+                <p>
+                    1. Установите чистую Windows 11<br>
+                    2. Скачайте AnRat Установка.bat<br>
+                    3. Нажмите правой кнопкой → Запуск от имени администратора<br>
+                    4. Выберите "ВСЁ СРАЗУ"<br>
+                    5. Дождитесь завершения и перезагрузитесь
+                </p>
+            </div>
+            <div class="card">
+                <h3>💬 Контакты</h3>
+                <p>
+                    Разработчик: Кобилов<br>
+                    Email: a42189100@gmail.com<br>
+                    По вопросам партнерства: systembuilder@kaspersky.com
+                </p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div class="made">СДЕЛАНО КОБИЛОВЫМ</div>
+            <div>AnRat OS — безопасность, которой можно доверять</div>
+            <div style="margin-top: 10px; font-size: 12px;">© 2025 AnRat OS. Все права защищены.</div>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('downloadBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Скоро появится ссылка для скачивания!\nПока можете сохранить установщик вручную.');
+        });
+    </script>
+</body>
+</html>
