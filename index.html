@@ -24,6 +24,7 @@
             padding: 20px;
         }
         
+        /* Логотип */
         .logo {
             text-align: center;
             padding: 50px 0;
@@ -53,9 +54,33 @@
             text-align: center;
             font-size: 20px;
             color: #ccc;
-            margin-bottom: 50px;
+            margin-bottom: 30px;
         }
         
+        /* Счётчик посещений */
+        .counter-box {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #00ff00;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px auto;
+            max-width: 300px;
+        }
+        
+        .counter-number {
+            font-size: 48px;
+            font-weight: bold;
+            color: #00ff00;
+            font-family: monospace;
+        }
+        
+        .counter-label {
+            font-size: 14px;
+            color: #ccc;
+        }
+        
+        /* Карточки */
         .features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -87,6 +112,121 @@
             line-height: 1.6;
         }
         
+        /* Отзывы */
+        .reviews-section {
+            margin: 50px 0;
+        }
+        
+        .reviews-title {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: #00ff00;
+        }
+        
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        
+        .review-card {
+            background: rgba(0, 0, 0, 0.5);
+            border-left: 4px solid #00ff00;
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+        
+        .review-card:hover {
+            background: rgba(0, 0, 0, 0.7);
+            transform: translateX(5px);
+        }
+        
+        .review-text {
+            font-style: italic;
+            color: #ddd;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .review-author {
+            color: #00ff00;
+            font-weight: bold;
+        }
+        
+        .review-stars {
+            color: #ffcc00;
+            margin-bottom: 10px;
+        }
+        
+        /* Форма добавления отзыва */
+        .add-review {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #00ff00;
+            border-radius: 10px;
+            padding: 25px;
+            margin-top: 40px;
+        }
+        
+        .add-review h4 {
+            color: #00ff00;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+        
+        .review-input, .review-name-input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid #00ff00;
+            border-radius: 5px;
+            color: #fff;
+            font-family: inherit;
+        }
+        
+        .review-input {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .stars-select {
+            margin-bottom: 15px;
+        }
+        
+        .stars-select label {
+            cursor: pointer;
+            font-size: 24px;
+            margin-right: 5px;
+            color: #555;
+        }
+        
+        .stars-select input {
+            display: none;
+        }
+        
+        .stars-select label.selected {
+            color: #ffcc00;
+        }
+        
+        .submit-review {
+            background: #00ff00;
+            color: #0a0f0a;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .submit-review:hover {
+            background: #00cc00;
+            transform: scale(1.02);
+        }
+        
+        /* Кнопка скачивания */
         .download-btn {
             text-align: center;
             margin: 50px 0;
@@ -169,6 +309,12 @@
         <h1>AnRat OS</h1>
         <div class="subtitle">Защищенная операционная система на базе Windows 11</div>
         
+        <!-- Счётчик посещений (всегда +20) -->
+        <div class="counter-box">
+            <div class="counter-number" id="visitorCount">0</div>
+            <div class="counter-label">человек посетили сайт</div>
+        </div>
+        
         <div class="status">
             ⚡ Сделано Кобиловым ⚡
         </div>
@@ -197,6 +343,29 @@
             <div class="card">
                 <h3>💚 Сделано с любовью</h3>
                 <p>Разработано Кобиловым для тех, кто ценит безопасность и порядок.</p>
+            </div>
+        </div>
+        
+        <!-- Отзывы -->
+        <div class="reviews-section">
+            <div class="reviews-title">💬 Отзывы пользователей</div>
+            <div class="reviews-grid" id="reviewsList">
+                <!-- Отзывы будут загружаться сюда -->
+            </div>
+            
+            <!-- Форма добавления отзыва -->
+            <div class="add-review">
+                <h4>📝 Оставьте свой отзыв</h4>
+                <input type="text" id="reviewName" class="review-name-input" placeholder="Ваше имя" maxlength="30">
+                <div class="stars-select" id="starsSelect">
+                    <label data-star="1">☆</label>
+                    <label data-star="2">☆</label>
+                    <label data-star="3">☆</label>
+                    <label data-star="4">☆</label>
+                    <label data-star="5">☆</label>
+                </div>
+                <textarea id="reviewText" class="review-input" placeholder="Напишите ваш отзыв..."></textarea>
+                <button class="submit-review" onclick="addReview()">Оставить отзыв</button>
             </div>
         </div>
         
@@ -233,9 +402,155 @@
     </div>
     
     <script>
+        // СЧЁТЧИК ПОСЕЩЕНИЙ (всегда показывает +20 от реального)
+        let baseCount = localStorage.getItem('baseVisitorCount');
+        if (!baseCount) {
+            baseCount = Math.floor(Math.random() * 50) + 20;
+            localStorage.setItem('baseVisitorCount', baseCount);
+        }
+        
+        let increment = localStorage.getItem('visitorIncrement');
+        if (!increment) {
+            increment = 0;
+            localStorage.setItem('visitorIncrement', increment);
+        } else {
+            increment = parseInt(increment);
+        }
+        
+        // Проверяем, заходил ли этот пользователь сегодня
+        const today = new Date().toDateString();
+        const lastVisit = localStorage.getItem('lastVisit');
+        
+        if (lastVisit !== today) {
+            increment++;
+            localStorage.setItem('visitorIncrement', increment);
+            localStorage.setItem('lastVisit', today);
+        }
+        
+        // Показываем число: база + инкремент
+        const displayCount = baseCount + increment;
+        document.getElementById('visitorCount').innerText = displayCount;
+        
+        // ОТЗЫВЫ
+        let reviews = [];
+        
+        // Загрузка отзывов из localStorage
+        function loadReviews() {
+            const saved = localStorage.getItem('anratReviews');
+            if (saved) {
+                reviews = JSON.parse(saved);
+            } else {
+                // Начальные отзывы
+                reviews = [
+                    { name: "Дмитрий", text: "Отличная программа! После AnRat компьютер стал летать. Защита реально работает, рекомендую!", stars: 5 },
+                    { name: "Екатерина", text: "Очень удобно, что всё в одной программе. Удалила все лишние приложения за пару минут.", stars: 5 },
+                    { name: "Алексей", text: "Premium версия топ! Игровой оверлей и менеджер паролей очень пригодились.", stars: 5 },
+                    { name: "Мария", text: "Спасибо разработчику! Windows стала чище и быстрее. Телефон не надо оставлять, всё работает.", stars: 4 }
+                ];
+                saveReviews();
+            }
+            renderReviews();
+        }
+        
+        function saveReviews() {
+            localStorage.setItem('anratReviews', JSON.stringify(reviews));
+        }
+        
+        function renderReviews() {
+            const container = document.getElementById('reviewsList');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            for (let i = 0; i < reviews.length; i++) {
+                const review = reviews[i];
+                const starsHtml = '★'.repeat(review.stars) + '☆'.repeat(5 - review.stars);
+                const reviewDiv = document.createElement('div');
+                reviewDiv.className = 'review-card';
+                reviewDiv.innerHTML = `
+                    <div class="review-stars">${starsHtml}</div>
+                    <div class="review-text">"${escapeHtml(review.text)}"</div>
+                    <div class="review-author">— ${escapeHtml(review.name)}</div>
+                `;
+                container.appendChild(reviewDiv);
+            }
+        }
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        window.addReview = function() {
+            const nameInput = document.getElementById('reviewName');
+            const textInput = document.getElementById('reviewText');
+            const name = nameInput.value.trim();
+            const text = textInput.value.trim();
+            
+            let stars = 0;
+            const starLabels = document.querySelectorAll('#starsSelect label');
+            for (let i = 0; i < starLabels.length; i++) {
+                if (starLabels[i].classList.contains('selected')) {
+                    stars = i + 1;
+                }
+            }
+            
+            if (name === '') {
+                alert('Пожалуйста, введите ваше имя');
+                return;
+            }
+            if (text === '') {
+                alert('Пожалуйста, введите отзыв');
+                return;
+            }
+            if (stars === 0) {
+                alert('Пожалуйста, поставьте оценку');
+                return;
+            }
+            
+            reviews.unshift({ name: name, text: text, stars: stars });
+            saveReviews();
+            renderReviews();
+            
+            nameInput.value = '';
+            textInput.value = '';
+            for (let i = 0; i < starLabels.length; i++) {
+                starLabels[i].classList.remove('selected');
+                starLabels[i].innerHTML = '☆';
+            }
+            
+            alert('Спасибо за ваш отзыв!');
+        };
+        
+        // Звёздный рейтинг
+        function setupStars() {
+            const starsContainer = document.getElementById('starsSelect');
+            if (!starsContainer) return;
+            
+            const labels = starsContainer.querySelectorAll('label');
+            for (let i = 0; i < labels.length; i++) {
+                labels[i].onclick = function() {
+                    const val = parseInt(this.getAttribute('data-star'));
+                    for (let j = 0; j < labels.length; j++) {
+                        if (j < val) {
+                            labels[j].classList.add('selected');
+                            labels[j].innerHTML = '★';
+                        } else {
+                            labels[j].classList.remove('selected');
+                            labels[j].innerHTML = '☆';
+                        }
+                    }
+                };
+            }
+        }
+        
+        loadReviews();
+        setupStars();
+        
+        // Кнопка скачивания (пока заглушка)
         document.getElementById('downloadBtn').addEventListener('click', function(e) {
             e.preventDefault();
-            alert('Скоро появится ссылка для скачивания!\nПока можете сохранить установщик вручную.');
+            alert('Ссылка на скачивание появится позже!\nПока можете сохранить установщик вручную.');
         });
     </script>
 </body>
