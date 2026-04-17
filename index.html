@@ -208,7 +208,7 @@
     }
     updateCounter();
 
-    // ПОЛНЫЙ КОД ANRAT (ВЗЯТ ИЗ ТВОЕГО ПОСЛЕДНЕГО СООБЩЕНИЯ В ЧАТЕ)
+    // ПОЛНЫЙ КОД ANRAT (ВСТАВЛЕН ВРУЧНУЮ ИЗ ТВОЕГО ПОСЛЕДНЕГО РАБОЧЕГО ФАЙЛА)
     const fullCode = `@echo off
 setlocal enabledelayedexpansion
 chcp 1251 > nul
@@ -218,7 +218,7 @@ color 0A
 :: ========================================
 :: ПРОВЕРКА ЛИЦЕНЗИИ (два типа ключей)
 :: ========================================
-set "LICENSE_FILE=%userprofile%\AnRat_License.key"
+set "LICENSE_FILE=%userprofile%\\AnRat_License.key"
 set "IS_PREMIUM=0"
 set "LICENSE_TYPE="
 set "HOURS_LEFT=0"
@@ -249,7 +249,7 @@ set "VERSION=2.1"
 set "UPDATE_URL=https://raw.githubusercontent.com/An-Rat2026/AnRat-os/main/version.txt"
 set "DOWNLOAD_URL=https://raw.githubusercontent.com/An-Rat2026/AnRat-os/main/AnRat_MAX_Premium.bat"
 
-set "LAST_CHECK_FILE=%temp%\AnRat_last_check.txt"
+set "LAST_CHECK_FILE=%temp%\\AnRat_last_check.txt"
 set "CURRENT_DATE=%date%"
 
 if not exist "%LAST_CHECK_FILE%" (
@@ -268,8 +268,8 @@ goto :skip_update
 echo.
 echo   🔄 Проверка обновлений...
 ping -n 2 127.0.0.1 > nul
-powershell -Command "try { $response = Invoke-WebRequest -Uri '%UPDATE_URL%' -UseBasicParsing -TimeoutSec 5; $response.Content } catch { '0' }" > "%temp%\version_check.txt" 2>nul
-set /p SERVER_VERSION=<"%temp%\version_check.txt"
+powershell -Command "try { $response = Invoke-WebRequest -Uri '%UPDATE_URL%' -UseBasicParsing -TimeoutSec 5; $response.Content } catch { '0' }" > "%temp%\\version_check.txt" 2>nul
+set /p SERVER_VERSION=<"%temp%\\version_check.txt"
 if "%SERVER_VERSION%"=="0" goto :skip_update
 if "%SERVER_VERSION%"=="%VERSION%" goto :skip_update
 cls
@@ -295,8 +295,8 @@ echo        🔄 УСТАНОВКА ОБНОВЛЕНИЯ
 echo ========================================
 echo.
 echo Скачиваю новую версию...
-powershell -Command "Invoke-WebRequest -Uri '%DOWNLOAD_URL%' -OutFile '%temp%\AnRat_new.bat'" 2>nul
-copy /y "%temp%\AnRat_new.bat" "%~f0" > nul
+powershell -Command "Invoke-WebRequest -Uri '%DOWNLOAD_URL%' -OutFile '%temp%\\AnRat_new.bat'" 2>nul
+copy /y "%temp%\\AnRat_new.bat" "%~f0" > nul
 echo.
 echo ========================================
 echo        ✅ ОБНОВЛЕНИЕ УСТАНОВЛЕНО!
@@ -414,7 +414,7 @@ echo ========================================
 echo        🌡️ МОНИТОРИНГ ТЕМПЕРАТУРЫ
 echo ========================================
 echo.
-for /f "tokens=2 delims==" %%a in ('wmic /namespace:\\root\wmi path MSAcpi_ThermalZoneTemperature get CurrentTemperature /value 2^>nul') do (
+for /f "tokens=2 delims==" %%a in ('wmic /namespace:\\root\\wmi path MSAcpi_ThermalZoneTemperature get CurrentTemperature /value 2^>nul') do (
     set /a "temp=%%a / 10 - 273"
     echo 🔥 Температура процессора: !temp!°C
 )
@@ -426,8 +426,8 @@ goto main_menu
 cls
 echo Включаю игровой турбо-режим...
 powercfg -setactive 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c >nul
-reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\GameDVR" /v "AppCaptureEnabled" /t REG_DWORD /d 0 /f >nul
-reg add "HKCU\Software\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v "SystemResponsiveness" /t REG_DWORD /d 0 /f >nul
+reg add "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\GameDVR" /v "AppCaptureEnabled" /t REG_DWORD /d 0 /f >nul
+reg add "HKCU\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile" /v "SystemResponsiveness" /t REG_DWORD /d 0 /f >nul
 sc config "SysMain" start= disabled >nul
 sc config "WSearch" start= disabled >nul
 sc config "wuauserv" start= disabled >nul
@@ -442,8 +442,8 @@ goto main_menu
 cls
 echo Выключаю игровой турбо-режим...
 powercfg -setactive 381b4222-f694-41f0-9685-ff5bb260df2e >nul
-reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\GameDVR" /v "AppCaptureEnabled" /t REG_DWORD /d 1 /f >nul
-reg add "HKCU\Software\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v "SystemResponsiveness" /t REG_DWORD /d 20 /f >nul
+reg add "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\GameDVR" /v "AppCaptureEnabled" /t REG_DWORD /d 1 /f >nul
+reg add "HKCU\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile" /v "SystemResponsiveness" /t REG_DWORD /d 20 /f >nul
 sc config "SysMain" start= auto >nul
 sc config "WSearch" start= auto >nul
 sc config "wuauserv" start= auto >nul
@@ -455,7 +455,7 @@ goto main_menu
 if "%IS_PREMIUM%"=="0" (echo ❌ Только Premium! & call :back_to_menu & goto main_menu)
 cls
 echo Установка курсора AnRat...
-set "CURSOR_DIR=%AppData%\AnRat\Cursor"
+set "CURSOR_DIR=%AppData%\\AnRat\\Cursor"
 mkdir "%CURSOR_DIR%" 2>nul
 (
 echo [Version]
@@ -465,10 +465,10 @@ echo [DefaultInstall]
 echo AddReg = AnRatCursorReg
 echo.
 echo [AnRatCursorReg]
-echo HKCU,"Control Panel\Cursors","Arrow",,"%CURSOR_DIR%\anrat_cursor.cur"
-echo HKCU,"Control Panel\Cursors","Scheme Source",,"AnRat Cursor Scheme"
-) > "%CURSOR_DIR%\install.inf"
-rundll32 syssetup.dll,SetupInfObjectInstallAction DefaultInstall 128 "%CURSOR_DIR%\install.inf"
+echo HKCU,"Control Panel\\Cursors","Arrow",,"%CURSOR_DIR%\\anrat_cursor.cur"
+echo HKCU,"Control Panel\\Cursors","Scheme Source",,"AnRat Cursor Scheme"
+) > "%CURSOR_DIR%\\install.inf"
+rundll32 syssetup.dll,SetupInfObjectInstallAction DefaultInstall 128 "%CURSOR_DIR%\\install.inf"
 echo ✅ Курсор установлен.
 call :back_to_menu
 goto main_menu
@@ -539,18 +539,18 @@ if "%act%"=="1" (
     set /p site="Сайт: "
     set /p log="Логин: "
     set /p pass="Пароль: "
-    mkdir "%userprofile%\AnRat_Passwords" 2>nul
-    (echo Сайт: %site% & echo Логин: %log% & echo Пароль: %pass% & echo Дата: %date%) > "%userprofile%\AnRat_Passwords\%site%.txt"
+    mkdir "%userprofile%\\AnRat_Passwords" 2>nul
+    (echo Сайт: %site% & echo Логин: %log% & echo Пароль: %pass% & echo Дата: %date%) > "%userprofile%\\AnRat_Passwords\\%site%.txt"
     echo Сохранено.
 )
-if "%act%"=="2" dir "%userprofile%\AnRat_Passwords\*.txt"
+if "%act%"=="2" dir "%userprofile%\\AnRat_Passwords\\*.txt"
 if "%act%"=="3" (
     set /p search="Поиск: "
-    type "%userprofile%\AnRat_Passwords\%search%.txt" 2>nul || echo Не найдено
+    type "%userprofile%\\AnRat_Passwords\\%search%.txt" 2>nul || echo Не найдено
 )
 if "%act%"=="4" (
     set /p delsite="Удалить: "
-    del "%userprofile%\AnRat_Passwords\%delsite%.txt" 2>nul && echo Удалено
+    del "%userprofile%\\AnRat_Passwords\\%delsite%.txt" 2>nul && echo Удалено
 )
 if "%act%"=="5" (
     set "passgen="
@@ -570,11 +570,11 @@ echo 3. Игровая
 echo 4. AnRat
 echo 5. Стандарт
 set /p t="Выбор: "
-if "%t%"=="1" reg add "HKCU\Software\Microsoft\Windows\DWM" /v "AccentColor" /t REG_DWORD /d 0xff00ff /f
-if "%t%"=="2" reg add "HKCU\Software\Microsoft\Windows\DWM" /v "AccentColor" /t REG_DWORD /d 0x00008b /f
-if "%t%"=="3" reg add "HKCU\Software\Microsoft\Windows\DWM" /v "AccentColor" /t REG_DWORD /d 0xff0000 /f
-if "%t%"=="4" reg add "HKCU\Software\Microsoft\Windows\DWM" /v "AccentColor" /t REG_DWORD /d 0x00aa00 /f
-if "%t%"=="5" reg add "HKCU\Software\Microsoft\Windows\DWM" /v "AccentColor" /t REG_DWORD /d 0x0078d4 /f
+if "%t%"=="1" reg add "HKCU\\Software\\Microsoft\\Windows\\DWM" /v "AccentColor" /t REG_DWORD /d 0xff00ff /f
+if "%t%"=="2" reg add "HKCU\\Software\\Microsoft\\Windows\\DWM" /v "AccentColor" /t REG_DWORD /d 0x00008b /f
+if "%t%"=="3" reg add "HKCU\\Software\\Microsoft\\Windows\\DWM" /v "AccentColor" /t REG_DWORD /d 0xff0000 /f
+if "%t%"=="4" reg add "HKCU\\Software\\Microsoft\\Windows\\DWM" /v "AccentColor" /t REG_DWORD /d 0x00aa00 /f
+if "%t%"=="5" reg add "HKCU\\Software\\Microsoft\\Windows\\DWM" /v "AccentColor" /t REG_DWORD /d 0x0078d4 /f
 echo Тема применена.
 call :back_to_menu
 goto main_menu
@@ -585,39 +585,39 @@ if not exist "%fold%" (echo Папки нет & call :back_to_menu & goto main_m
 set /p pass="Пароль: "
 set /p conf="Повтор: "
 if not "%pass%"=="%conf%" (echo Не совпадает & call :back_to_menu & goto main_menu)
-echo %pass% > "%fold%\AnRat_Lock.key"
-attrib +h "%fold%\AnRat_Lock.key" & attrib +h "%fold%"
+echo %pass% > "%fold%\\AnRat_Lock.key"
+attrib +h "%fold%\\AnRat_Lock.key" & attrib +h "%fold%"
 echo Папка скрыта и защищена.
 call :back_to_menu
 goto main_menu
 
 :unlock_folder
 set /p fold="Путь к папке: "
-if not exist "%fold%\AnRat_Lock.key" (echo Не защищена & call :back_to_menu & goto main_menu)
+if not exist "%fold%\\AnRat_Lock.key" (echo Не защищена & call :back_to_menu & goto main_menu)
 set /p pass="Пароль: "
-set /p saved=<"%fold%\AnRat_Lock.key"
+set /p saved=<"%fold%\\AnRat_Lock.key"
 if not "%pass%"=="%saved%" (echo Неверно & call :back_to_menu & goto main_menu)
-attrib -h "%fold%" & attrib -h "%fold%\AnRat_Lock.key"
+attrib -h "%fold%" & attrib -h "%fold%\\AnRat_Lock.key"
 echo Папка открыта.
 call :back_to_menu
 goto main_menu
 
 :show_locked
 echo Защищённые папки:
-for /f "tokens=*" %%d in ('dir /s /b C:\AnRat_Lock.key 2^>nul') do echo %%~dpd
+for /f "tokens=*" %%d in ('dir /s /b C:\\AnRat_Lock.key 2^>nul') do echo %%~dpd
 call :back_to_menu
 goto main_menu
 
 :change_password
 set /p fold="Путь к папке: "
-if not exist "%fold%\AnRat_Lock.key" (echo Не защищена & call :back_to_menu & goto main_menu)
+if not exist "%fold%\\AnRat_Lock.key" (echo Не защищена & call :back_to_menu & goto main_menu)
 set /p oldp="Старый пароль: "
-set /p savedp=<"%fold%\AnRat_Lock.key"
+set /p savedp=<"%fold%\\AnRat_Lock.key"
 if not "%oldp%"=="%savedp%" (echo Неверно & call :back_to_menu & goto main_menu)
 set /p newp="Новый пароль: "
 set /p confp="Повтор: "
 if not "%newp%"=="%confp%" (echo Не совпадает & call :back_to_menu & goto main_menu)
-echo %newp% > "%fold%\AnRat_Lock.key"
+echo %newp% > "%fold%\\AnRat_Lock.key"
 echo Пароль изменён.
 call :back_to_menu
 goto main_menu
@@ -660,3 +660,4 @@ exit`;
 </script>
 </body>
 </html>
+    
