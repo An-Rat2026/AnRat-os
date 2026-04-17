@@ -195,7 +195,7 @@
 </div>
 
 <script>
-    // Счётчик
+    // Счётчик посещений
     async function updateCounter() {
         try {
             const response = await fetch('https://api.github.com/repos/An-Rat2026/AnRat-os');
@@ -208,7 +208,7 @@
     }
     updateCounter();
 
-    // ПОЛНЫЙ КОД ANRAT (КОПИРУЕТСЯ ЦЕЛИКОМ)
+    // ПОЛНЫЙ КОД ANRAT (ВЗЯТ ИЗ ТВОЕГО ПОСЛЕДНЕГО СООБЩЕНИЯ В ЧАТЕ)
     const fullCode = `@echo off
 setlocal enabledelayedexpansion
 chcp 1251 > nul
@@ -388,7 +388,7 @@ if "%choice%"=="18" goto end
 goto main_menu
 
 :: ========================================
-:: ОСТАЛЬНЫЕ ФУНКЦИИ (ПОКАЗ WI-FI, ТЕМПЕРАТУРА, ИГРОВОЙ РЕЖИМ, КУРСОР И Т.Д.)
+:: ОСТАЛЬНЫЕ ФУНКЦИИ
 :: ========================================
 :show_wifi
 cls
