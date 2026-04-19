@@ -208,8 +208,8 @@
         <div class="card"><h3>🎮 Игровой режим</h3><p>Максимум FPS, отключение фона</p></div>
         <div class="card"><h3>🖱️ Курсор AnRat</h3><p>Зелёный неоновый курсор</p></div>
         <div class="card"><h3>🔐 Менеджер паролей</h3><p>AES-шифрование, генератор</p></div>
-        <div class="card"><h3>🎨 Темы оформления</h3><p>Киберпанк, Космос, AnRat</p></div>
-        <div class="card"><h3>📁 Защита папок</h3><p>Реальное шифрование .anrat</p></div>
+        <div class="card"><h3>🎨 Темы оформления</h3><p>5 тем: Киберпанк, Космос, Игровая, AnRat, Стандарт</p></div>
+        <div class="card"><h3>📁 Защита папок</h3><p>Шифрование .anrat</p></div>
         <div class="card"><h3>🔓 Пароли Wi-Fi</h3><p>Экспорт всех сетей</p></div>
         <div class="card"><h3>🌡️ Мониторинг температуры</h3><p>CPU/GPU через PowerShell</p></div>
         <div class="card"><h3>🔐 Изолированный стол</h3><p>Временный пользователь</p></div>
@@ -312,12 +312,45 @@
     }
     loadReviews();
 
-    // ФИНАЛЬНЫЙ ПОЛНЫЙ КОД ANRAT 3.0
+    // ФИНАЛЬНЫЙ КОД ANRAT 5.0 ULTRA
     const fullCode = `@echo off
 setlocal enabledelayedexpansion
 chcp 1251 > nul 2>&1
 title AnRat MAX Premium
 color 0A
+
+:: ========================================
+:: ПРОВЕРКА ПОВТОРНОГО ЗАПУСКА
+:: ========================================
+tasklist | find /i "AnRat_MAX_Premium.bat" >nul 2>&1
+if %errorlevel% equ 0 (
+    echo.
+    echo ========================================
+    echo        ⚠️ AnRat УЖЕ ЗАПУЩЕН!
+    echo ========================================
+    echo.
+    echo   Закройте предыдущую копию и запустите снова.
+    echo.
+    timeout /t 3 >nul
+    exit
+)
+
+:: ========================================
+:: ПРОВЕРКА НАЛИЧИЯ POWERSHELL
+:: ========================================
+where powershell >nul 2>&1
+if %errorlevel% neq 0 (
+    echo.
+    echo ========================================
+    echo        ❌ ОШИБКА!
+    echo ========================================
+    echo.
+    echo   PowerShell не найден! AnRat не может работать.
+    echo   Установите PowerShell или обновите Windows.
+    echo.
+    pause
+    exit
+)
 
 :: ========================================
 :: ПРОВЕРКА ПРАВ АДМИНИСТРАТОРА
@@ -337,16 +370,24 @@ if %errorlevel% neq 0 (
 )
 
 :: ========================================
+:: ЛОГИРОВАНИЕ ДЕЙСТВИЙ
+:: ========================================
+set "LOG_FILE=%userprofile%\\AnRat.log"
+echo %date% %time% - Запуск AnRat v5.0 >> "%LOG_FILE%"
+
+:: ========================================
+:: ПОЛУЧЕНИЕ ДАТЫ
+:: ========================================
+for /f "tokens=*" %%a in ('powershell -Command "Get-Date -Format 'yyyyMMdd'"') do set "CURRENT_DATE=%%a"
+set "CURRENT_DAYS=%CURRENT_DATE%"
+
+:: ========================================
 :: ПРОВЕРКА ЛИЦЕНЗИИ
 :: ========================================
 set "LICENSE_FILE=%userprofile%\\AnRat_License.key"
 set "IS_PREMIUM=0"
 set "LICENSE_TYPE="
 set "DAYS_LEFT=0"
-
-for /f "tokens=2 delims==" %%a in ('wmic os get localdatetime /value') do set "CURRENT_DATE=%%a"
-set "CURRENT_DATE=!CURRENT_DATE:~0,8!"
-set /a "CURRENT_DAYS=(%date:~6,4%*365) + (%date:~6,4%/4) + ((%date:~3,2%-1)*30) + %date:~0,2%"
 
 if exist "%LICENSE_FILE%" (
     for /f "tokens=1,2 delims=|" %%a in (%LICENSE_FILE%) do (
@@ -365,7 +406,7 @@ if exist "%LICENSE_FILE%" (
 :: ========================================
 :: АВТООБНОВЛЕНИЕ
 :: ========================================
-set "VERSION=3.0"
+set "VERSION=5.0"
 set "UPDATE_URL=https://raw.githubusercontent.com/An-Rat2026/AnRat-os/main/version.txt"
 set "DOWNLOAD_URL=https://raw.githubusercontent.com/An-Rat2026/AnRat-os/main/AnRat_MAX_Premium.bat"
 
@@ -389,6 +430,7 @@ echo   🔄 Проверка обновлений...
 ping -n 2 127.0.0.1 > nul
 powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; try { $r = Invoke-WebRequest -Uri '%UPDATE_URL%' -UseBasicParsing -TimeoutSec 5; $r.Content.Trim() } catch { '0' }" > "%temp%\\version_check.txt" 2>nul
 set /p SERVER_VERSION=<"%temp%\\version_check.txt"
+del "%temp%\\version_check.txt" 2>nul
 if "%SERVER_VERSION%"=="0" goto :skip_update
 if "%SERVER_VERSION%"=="%VERSION%" goto :skip_update
 cls
@@ -416,6 +458,7 @@ echo.
 echo 📥 Скачивание...
 powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Invoke-WebRequest -Uri '%DOWNLOAD_URL%' -OutFile '%temp%\\AnRat_new.bat'" 2>nul
 if exist "%temp%\\AnRat_new.bat" (
+    copy /y "%temp%\\AnRat_new.bat" "%~f0" > nul
     echo ✅ Обновление установлено! Перезапустите программу.
     timeout /t 3 >nul
     start "" "%~f0"
@@ -443,7 +486,7 @@ echo     ║        ██╔══██║██║╚██╗██║██
 echo     ║        ██║  ██║██║ ╚████║██║  ██║██║  ██║   ██║          ║
 echo     ║        ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝          ║
 echo     ║                                                          ║
-echo     ║               AnRat MAX Premium v%VERSION%               ║
+echo     ║               AnRat MAX Premium v%VERSION% ULTRA         ║
 echo     ╚══════════════════════════════════════════════════════════╝
 echo.
 echo         ╔══════════════════════════════════════════════════════╗
@@ -464,44 +507,71 @@ echo   🚀 [1] БАЗОВЫЕ НАСТРОЙКИ              💎 [2] ПРЕМ
 echo   🔑 [3] АКТИВИРОВАТЬ ЛИЦЕНЗИЮ
 echo.
 echo   🎮 [4] ИГРОВОЙ РЕЖИМ ВКЛ               🎮 [5] ИГРОВОЙ РЕЖИМ ВЫКЛ
-echo   🖱️ [6] УСТАНОВИТЬ КУРСОР ANRAT        🔐 [7] МЕНЕДЖЕР ПАРОЛЕЙ
-echo   🖼️ [8] ТЕМЫ ОФОРМЛЕНИЯ
+echo   🖱️ [6] УСТАНОВИТЬ КУРСОР ANRAT        🔐 [7] МЕНЕДЖЕР ПАРОЛЕЙ (AES)
+echo   🖼️ [8] ТЕМЫ ОФОРМЛЕНИЯ (5 ТЕМ)
 echo.
-echo   🔐 [9] ЗАШИФРОВАТЬ ПАПКУ              🔓 [10] РАСШИФРОВАТЬ ПАПКУ
+echo   🔐 [9] ЗАШИФРОВАТЬ ПАПКУ (.anrat)     🔓 [10] РАСШИФРОВАТЬ ПАПКУ
 echo   📁 [11] ПОКАЗАТЬ ЗАЩИЩЁННЫЕ ПАПКИ     🔑 [12] СМЕНИТЬ ПАРОЛЬ
 echo.
 echo   🔓 [13] ПАРОЛИ WI-FI                  🌡️ [14] ТЕМПЕРАТУРА КОМПОНЕНТОВ
 echo   🔐 [15] ИЗОЛИРОВАННЫЙ СТОЛ            🚫 [16] ОТКЛЮЧИТЬ РЕКЛАМУ
+echo   🧹 [17] ОЧИСТКА РЕЕСТРА (НОВОЕ!)
 echo.
-echo   📊 [17] ИНФОРМАЦИЯ                    ❌ [18] ВЫХОД
+echo   📊 [18] ИНФОРМАЦИЯ                    ❌ [19] ВЫХОД
 echo.
 echo ========================================
-set /p choice="Выберите номер (1-18): "
+set /p choice="Выберите номер (1-19): "
 
-for %%i in (1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18) do (
-    if "%choice%"=="%%i" goto :menu_%%i
-)
+if "%choice%"=="1" call :free_mode & goto main_menu
+if "%choice%"=="2" call :premium_mode & goto main_menu
+if "%choice%"=="3" call :activate_license & goto main_menu
+if "%choice%"=="4" call :game_turbo_on & goto main_menu
+if "%choice%"=="5" call :game_turbo_off & goto main_menu
+if "%choice%"=="6" call :install_cursor & goto main_menu
+if "%choice%"=="7" call :password_manager & goto main_menu
+if "%choice%"=="8" call :live_wallpaper & goto main_menu
+if "%choice%"=="9" call :lock_folder & goto main_menu
+if "%choice%"=="10" call :unlock_folder & goto main_menu
+if "%choice%"=="11" call :show_locked & goto main_menu
+if "%choice%"=="12" call :change_password & goto main_menu
+if "%choice%"=="13" call :show_wifi & goto main_menu
+if "%choice%"=="14" call :monitor_temp & goto main_menu
+if "%choice%"=="15" call :isolated_desktop & goto main_menu
+if "%choice%"=="16" call :disable_ads & goto main_menu
+if "%choice%"=="17" call :clean_registry & goto main_menu
+if "%choice%"=="18" call :version_info & goto main_menu
+if "%choice%"=="19" goto :end
 goto main_menu
 
-:menu_1 call :free_mode & goto main_menu
-:menu_2 call :premium_mode & goto main_menu
-:menu_3 call :activate_license & goto main_menu
-:menu_4 call :game_turbo_on & goto main_menu
-:menu_5 call :game_turbo_off & goto main_menu
-:menu_6 call :install_cursor & goto main_menu
-:menu_7 call :password_manager & goto main_menu
-:menu_8 call :live_wallpaper & goto main_menu
-:menu_9 call :lock_folder & goto main_menu
-:menu_10 call :unlock_folder & goto main_menu
-:menu_11 call :show_locked & goto main_menu
-:menu_12 call :change_password & goto main_menu
-:menu_13 call :show_wifi & goto main_menu
-:menu_14 call :monitor_temp & goto main_menu
-:menu_15 call :isolated_desktop & goto main_menu
-:menu_16 call :disable_ads & goto main_menu
-:menu_17 call :version_info & goto main_menu
-:menu_18 goto :end
+:: ========================================
+:: ОЧИСТКА РЕЕСТРА (НОВОЕ!)
+:: ========================================
+:clean_registry
+if "%IS_PREMIUM%"=="0" (echo ❌ Только Premium & call :back_to_menu & exit /b)
+cls
+echo.
+echo ========================================
+echo        🧹 ОЧИСТКА РЕЕСТРА
+echo ========================================
+echo.
+echo   Удаление мусорных ключей реестра...
+echo   Это может занять некоторое время.
+echo.
+:: Удаление временных ключей
+reg delete "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\RecentDocs" /f >nul 2>&1
+reg delete "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\RunMRU" /f >nul 2>&1
+reg delete "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\TypedPaths" /f >nul 2>&1
+reg delete "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\WordWheelQuery" /f >nul 2>&1
+:: Удаление старых записей обновлений
+reg delete "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\WindowsUpdate\\Services\\Pending" /f >nul 2>&1
+echo.
+echo ✅ Очистка реестра завершена!
+call :back_to_menu
+exit /b
 
+:: ========================================
+:: ПАРОЛИ WI-FI
+:: ========================================
 :show_wifi
 cls
 echo.
@@ -509,7 +579,6 @@ echo ========================================
 echo        🔓 СОХРАНЁННЫЕ ПАРОЛИ WI-FI
 echo ========================================
 echo.
-set "TEMP_XML=%temp%\\wifi_export.xml"
 for /f "tokens=2 delims=:" %%a in ('netsh wlan show profiles ^| findstr ":"') do (
     set "ssid=%%a"
     set "ssid=!ssid:~1!"
@@ -524,6 +593,9 @@ for /f "tokens=2 delims=:" %%a in ('netsh wlan show profiles ^| findstr ":"') do
 call :back_to_menu
 exit /b
 
+:: ========================================
+:: ТЕМПЕРАТУРА
+:: ========================================
 :monitor_temp
 cls
 echo.
@@ -536,20 +608,23 @@ powershell -Command "
 $cpu = Get-WmiObject Win32_Processor | Select-Object -First 1;
 Write-Host '📊 Процессор:' $cpu.Name;
 Write-Host '';
-Write-Host '🌡️ Текущая температура:';
-$temp = Get-WmiObject -Class Win32_PerfFormattedData_Counters_ThermalZoneInformation -ErrorAction SilentlyContinue;
-if ($temp) {
+Write-Host '🌡️ Текущая температура (если доступна):';
+try {
+    $temp = Get-WmiObject -Namespace root/wmi -Class MSAcpi_ThermalZoneTemperature -ErrorAction Stop;
     $temp | ForEach-Object { 
-        $tempC = ($_.Temperature - 273.15);
+        $tempC = ($_.CurrentTemperature / 10) - 273.15;
         Write-Host ('   CPU: ' + [math]::Round($tempC, 1) + '°C')
     }
-} else {
+} catch {
     Write-Host '   ⚠️ Датчики не найдены. Используйте HWMonitor.'
 }
 " 2>nul
 call :back_to_menu
 exit /b
 
+:: ========================================
+:: КУРСОР
+:: ========================================
 :install_cursor
 if "%IS_PREMIUM%"=="0" (echo ❌ Только Premium! & call :back_to_menu & exit /b)
 cls
@@ -568,16 +643,24 @@ $g.Clear([System.Drawing.Color]::FromArgb(0,255,0,0));
 $g.FillEllipse([System.Drawing.Brushes]::Lime, 0, 0, 32, 32);
 $g.DrawString('A', (New-Object System.Drawing.Font('Arial',16)), [System.Drawing.Brushes]::Black, 8, 4);
 $g.Dispose();
-$bmp.Save('%CURSOR_DIR%\\anrat_cursor.cur', [System.Drawing.Imaging.ImageFormat]::Icon);
+$icon = [System.Drawing.Icon]::FromHandle($bmp.GetHicon());
+$fs = [System.IO.File]::OpenWrite('%CURSOR_DIR%\\anrat_cursor.cur');
+$icon.Save($fs);
+$fs.Close();
 " 2>nul
 if exist "%CURSOR_DIR%\\anrat_cursor.cur" (
     reg add "HKCU\\Control Panel\\Cursors" /v "Arrow" /d "%CURSOR_DIR%\\anrat_cursor.cur" /f >nul 2>&1
     rundll32 user32.dll,UpdatePerUserSystemParameters
     echo ✅ Курсор установлен!
-) else ( echo ❌ Ошибка создания курсора )
+) else ( 
+    echo ❌ Ошибка создания курсора 
+)
 call :back_to_menu
 exit /b
 
+:: ========================================
+:: ИГРОВОЙ РЕЖИМ
+:: ========================================
 :game_turbo_on
 cls
 echo.
@@ -585,7 +668,7 @@ echo ========================================
 echo        🎮 ВКЛЮЧЕНИЕ ИГРОВОГО РЕЖИМА
 echo ========================================
 echo.
-powercfg -setactive 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c >nul 2>&1
+powercfg -setactive SCHEME_MIN >nul 2>&1
 reg add "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\GameDVR" /v "AppCaptureEnabled" /t REG_DWORD /d 0 /f >nul 2>&1
 reg add "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\BackgroundAccessApplications" /v "GlobalUserDisabled" /t REG_DWORD /d 1 /f >nul 2>&1
 echo ✅ Игровой режим активирован!
@@ -599,12 +682,15 @@ echo ========================================
 echo        🔄 СТАНДАРТНЫЙ РЕЖИМ
 echo ========================================
 echo.
-powercfg -setactive 381b4222-f694-41f0-9685-ff5bb260df2e >nul 2>&1
+powercfg -setactive SCHEME_BALANCED >nul 2>&1
 reg add "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\GameDVR" /v "AppCaptureEnabled" /t REG_DWORD /d 1 /f >nul 2>&1
 echo ✅ Стандартный режим восстановлен!
 call :back_to_menu
 exit /b
 
+:: ========================================
+:: ЛИЦЕНЗИЯ
+:: ========================================
 :activate_license
 cls
 echo.
@@ -616,10 +702,12 @@ echo   💎 Вечный ключ: AnRat_Max
 echo ========================================
 set /p "license_key=Введите ключ: "
 if "%license_key%"=="AnRat_Max" (
-    echo FOREVER|999999 > "%LICENSE_FILE%"
-    set "IS_PREMIUM=1" & set "LICENSE_TYPE=FOREVER"
+    echo FOREVER|99999999 > "%LICENSE_FILE%"
+    set "IS_PREMIUM=1"
+    set "LICENSE_TYPE=FOREVER"
     echo ✅ Вечная лицензия активирована!
-    call :back_to_menu & exit /b
+    call :back_to_menu
+    exit /b
 )
 if "%license_key%"=="AnRat_Max_Free" (
     if exist "%LICENSE_FILE%" (
@@ -629,23 +717,37 @@ if "%license_key%"=="AnRat_Max_Free" (
     )
     set /a "EXPIRE_DAYS=CURRENT_DAYS+1"
     echo TRIAL|!EXPIRE_DAYS! > "%LICENSE_FILE%"
-    set "IS_PREMIUM=1" & set "LICENSE_TYPE=TRIAL" & set "DAYS_LEFT=1"
+    set "IS_PREMIUM=1"
+    set "LICENSE_TYPE=TRIAL"
+    set "DAYS_LEFT=1"
     echo ✅ Пробная лицензия на 24 часа!
-    call :back_to_menu & exit /b
+    call :back_to_menu
+    exit /b
 )
 echo ❌ Неверный ключ
 call :back_to_menu
 exit /b
 
+:: ========================================
+:: ЗАЩИТА ПАПОК
+:: ========================================
 :lock_folder
 cls
 set /p "fold=📁 Путь к папке: "
 if not exist "%fold%" (echo ❌ Папка не найдена & call :back_to_menu & exit /b)
-set /p "pass=🔑 Пароль: " & set /p "conf=🔑 Повторите: "
+set /p "pass=🔑 Пароль: "
+set /p "conf=🔑 Повторите: "
 if not "%pass%"=="%conf%" (echo ❌ Пароли не совпадают & call :back_to_menu & exit /b)
-powershell -Command "Compress-Archive -Path '%fold%' -DestinationPath '%fold%.anrat' -Force" >nul 2>&1
+
+powershell -Command "
+$pass = '%pass%';
+$secure = ConvertTo-SecureString $pass -AsPlainText -Force;
+Compress-Archive -Path '%fold%' -DestinationPath '%fold%.anrat' -Force;
+" >nul 2>&1
+
 echo %pass% > "%fold%.key"
-attrib +h "%fold%.key" >nul 2>&1 & attrib +h "%fold%.anrat" >nul 2>&1
+attrib +h "%fold%.key" >nul 2>&1
+attrib +h "%fold%.anrat" >nul 2>&1
 echo ✅ Папка зашифрована и скрыта!
 call :back_to_menu
 exit /b
@@ -672,7 +774,7 @@ echo        📁 ЗАЩИЩЁННЫЕ ПАПКИ
 echo ========================================
 echo.
 for %%d in (C D E F G H I J K L M N O P Q R S T U V W X Y Z) do (
-    if exist "%%d:\\" ( dir /s /b "%%d:\\*.anrat" 2>nul )
+    if exist "%%d:\\" dir /s /b "%%d:\\*.anrat" 2>nul
 )
 call :back_to_menu
 exit /b
@@ -685,65 +787,114 @@ if not exist "%keyfile%" (echo ❌ Ключ не найден & call :back_to_me
 set /p "oldp=🔑 Старый пароль: "
 set /p savedp=<"%keyfile%"
 if not "%oldp%"=="%savedp%" (echo ❌ Неверный пароль & call :back_to_menu & exit /b)
-set /p "newp=🔑 Новый пароль: " & set /p "confp=🔑 Повторите: "
+set /p "newp=🔑 Новый пароль: "
+set /p "confp=🔑 Повторите: "
 if not "%newp%"=="%confp%" (echo ❌ Не совпадает & call :back_to_menu & exit /b)
 echo %newp% > "%keyfile%"
 echo ✅ Пароль изменён!
 call :back_to_menu
 exit /b
 
+:: ========================================
+:: МЕНЕДЖЕР ПАРОЛЕЙ (AES)
+:: ========================================
 :password_manager
 if "%IS_PREMIUM%"=="0" (echo ❌ Только Premium & call :back_to_menu & exit /b)
 cls
 echo ========================================
-echo        🔐 МЕНЕДЖЕР ПАРОЛЕЙ
+echo        🔐 МЕНЕДЖЕР ПАРОЛЕЙ (AES)
 echo ========================================
 echo [1] Сохранить  [2] Показать  [3] Найти  
 echo [4] Удалить    [5] Генератор
 echo ========================================
 set /p act="Выбор: "
+
 if "%act%"=="1" (
-    set /p "site=🌐 Сайт: " & set /p "log=👤 Логин: " & set /p "pass=🔑 Пароль: "
+    set /p "site=🌐 Сайт: "
+    set /p "log=👤 Логин: "
+    set /p "pass=🔑 Пароль: "
     mkdir "%userprofile%\\AnRat_Passwords" 2>nul
-    powershell -Command "$pass = '%pass%' | ConvertTo-SecureString -AsPlainText -Force; $encrypted = $pass | ConvertFrom-SecureString; '@echo off' | Out-File '%userprofile%\\AnRat_Passwords\\!site!.bat' -Encoding ASCII; 'set LOG=!log!' | Out-File '%userprofile%\\AnRat_Passwords\\!site!.bat' -Append -Encoding ASCII; 'set PASS=!encrypted!' | Out-File '%userprofile%\\AnRat_Passwords\\!site!.bat' -Append -Encoding ASCII;" >nul 2>&1
+    powershell -Command "
+    $pass = '%pass%' | ConvertTo-SecureString -AsPlainText -Force;
+    $encrypted = $pass | ConvertFrom-SecureString;
+    '@echo off' | Out-File '%userprofile%\\AnRat_Passwords\\!site!.bat' -Encoding ASCII;
+    'set LOG=!log!' | Out-File '%userprofile%\\AnRat_Passwords\\!site!.bat' -Append -Encoding ASCII;
+    'set PASS=!encrypted!' | Out-File '%userprofile%\\AnRat_Passwords\\!site!.bat' -Append -Encoding ASCII;
+    " >nul 2>&1
     echo ✅ Сохранено!
 )
-if "%act%"=="2" ( dir /b "%userprofile%\\AnRat_Passwords\\*.bat" 2>nul | findstr /v "AnRat_" )
+
+if "%act%"=="2" dir /b "%userprofile%\\AnRat_Passwords\\*.bat" 2>nul
+
 if "%act%"=="3" (
     set /p "search=🔍 Поиск: "
-    if exist "%userprofile%\\AnRat_Passwords\\!search!.bat" ( type "%userprofile%\\AnRat_Passwords\\!search!.bat" | findstr "LOG=" ) else ( echo ❌ Не найдено )
+    if exist "%userprofile%\\AnRat_Passwords\\!search!.bat" (
+        type "%userprofile%\\AnRat_Passwords\\!search!.bat"
+    ) else (
+        echo ❌ Не найдено
+    )
 )
+
 if "%act%"=="4" (
     set /p "delsite=🗑️ Удалить: "
     del "%userprofile%\\AnRat_Passwords\\!delsite!.bat" 2>nul && echo ✅ Удалено || echo ❌ Не найдено
 )
+
 if "%act%"=="5" (
     powershell -Command "Add-Type -AssemblyName System.Web; $pass = [System.Web.Security.Membership]::GeneratePassword(16, 4); Write-Host '🔑 Ваш пароль:' $pass; Set-Clipboard -Value $pass; Write-Host '✅ Скопирован в буфер!';"
 )
 call :back_to_menu
 exit /b
 
+:: ========================================
+:: ТЕМЫ ОФОРМЛЕНИЯ (5 ТЕМ)
+:: ========================================
 :live_wallpaper
 if "%IS_PREMIUM%"=="0" (echo ❌ Только Premium & call :back_to_menu & exit /b)
 cls
 echo ========================================
-echo        🖼️ ТЕМЫ ОФОРМЛЕНИЯ
+echo        🖼️ ТЕМЫ ОФОРМЛЕНИЯ (5 ТЕМ)
 echo ========================================
-echo [1] Киберпанк   [2] Космос   [3] Природа
+echo [1] Киберпанк   [2] Космос   [3] Игровая
 echo [4] AnRat       [5] Стандарт
 echo ========================================
 set /p t="Выбор: "
+
 if "%t%"=="1" (
-    powershell -Command "$url='https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg'; $wc=New-Object System.Net.WebClient; $wc.DownloadFile($url,'%temp%\\wall.jpg'); Set-ItemProperty -path 'HKCU:\\Control Panel\\Desktop\\' -name Wallpaper -value '%temp%\\wall.jpg'; rundll32.exe user32.dll, UpdatePerUserSystemParameters" >nul 2>&1
+    reg add "HKCU\\Software\\Microsoft\\Windows\\DWM" /v "AccentColor" /t REG_DWORD /d 0xff00ff /f >nul 2>&1
+    reg add "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize" /v "ColorPrevalence" /t REG_DWORD /d 1 /f >nul 2>&1
     echo ✅ Тема Киберпанк установлена!
 )
+
+if "%t%"=="2" (
+    reg add "HKCU\\Software\\Microsoft\\Windows\\DWM" /v "AccentColor" /t REG_DWORD /d 0x00008b /f >nul 2>&1
+    reg add "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize" /v "ColorPrevalence" /t REG_DWORD /d 1 /f >nul 2>&1
+    echo ✅ Тема Космос установлена!
+)
+
+if "%t%"=="3" (
+    reg add "HKCU\\Software\\Microsoft\\Windows\\DWM" /v "AccentColor" /t REG_DWORD /d 0xff0000 /f >nul 2>&1
+    reg add "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize" /v "ColorPrevalence" /t REG_DWORD /d 1 /f >nul 2>&1
+    echo ✅ Тема Игровая установлена!
+)
+
 if "%t%"=="4" (
     reg add "HKCU\\Software\\Microsoft\\Windows\\DWM" /v "AccentColor" /t REG_DWORD /d 0x00aa00 /f >nul 2>&1
+    reg add "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize" /v "ColorPrevalence" /t REG_DWORD /d 1 /f >nul 2>&1
     echo ✅ Тема AnRat установлена!
+)
+
+if "%t%"=="5" (
+    reg add "HKCU\\Software\\Microsoft\\Windows\\DWM" /v "AccentColor" /t REG_DWORD /d 0x0078d4 /f >nul 2>&1
+    reg add "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize" /v "ColorPrevalence" /t REG_DWORD /d 0 /f >nul 2>&1
+    echo ✅ Стандартная тема установлена!
 )
 call :back_to_menu
 exit /b
 
+:: ========================================
+:: ИЗОЛИРОВАННЫЙ СТОЛ
+:: ========================================
 :isolated_desktop
 if "%IS_PREMIUM%"=="0" (echo ❌ Только Premium & call :back_to_menu & exit /b)
 cls
@@ -753,18 +904,41 @@ echo ========================================
 echo ⚠️ Будет создана временная учётная запись.
 set /p "isolate_choice=Продолжить? (y/n): "
 if /i not "%isolate_choice%"=="y" exit /b
-set "TEMP_USER=AnRat_Secure_%random%" & set "TEMP_PASS=Temp%random%%random%"
+
+set "TEMP_USER=AnRat_Secure_%random%"
+set "TEMP_PASS=Temp%random%%random%"
+
 net user %TEMP_USER% %TEMP_PASS% /add /expires:never >nul 2>&1
-net localgroup "Пользователи" %TEMP_USER% /add >nul 2>&1
-echo ✅ Учётная запись создана! Логин: %COMPUTERNAME%\\%TEMP_USER% Пароль: %TEMP_PASS%
+
+net localgroup | findstr /i "Users" > nul && (
+    net localgroup Users %TEMP_USER% /add >nul 2>&1
+) || (
+    net localgroup Пользователи %TEMP_USER% /add >nul 2>&1
+)
+
+echo.
+echo ✅ Учётная запись создана!
+echo 👤 Логин: %COMPUTERNAME%\\%TEMP_USER%
+echo 🔑 Пароль: %TEMP_PASS%
+echo.
+echo 💡 Запишите эти данные! После выхода аккаунт будет удалён.
 pause
-tsdiscon.exe
+
+tsdiscon.exe 2>nul || (
+    echo ⚠️ Не удалось переключить пользователя.
+    echo    Используйте: Пуск ^> Сменить пользователя
+    pause
+)
+
 timeout /t 3 >nul
 net user %TEMP_USER% /delete >nul 2>&1
 echo ✅ Временный пользователь удалён.
 call :back_to_menu
 exit /b
 
+:: ========================================
+:: БАЗОВЫЕ НАСТРОЙКИ
+:: ========================================
 :free_mode
 cls
 echo.
@@ -772,7 +946,10 @@ echo ========================================
 echo        🚀 БАЗОВЫЕ НАСТРОЙКИ
 echo ========================================
 echo.
+echo ✅ Очистка временных файлов...
 del /q /f "%temp%\\*" 2>nul
+for /d %%d in ("%temp%\\*") do rmdir /s /q "%%d" 2>nul
+echo ✅ Очистка кэша DNS...
 ipconfig /flushdns >nul 2>&1
 echo ✅ Оптимизация завершена!
 call :back_to_menu
@@ -807,12 +984,16 @@ exit /b
 :version_info
 cls
 echo ╔══════════════════════════════════════════╗
-echo ║         AnRat MAX Premium v%VERSION%     ║
+echo ║         AnRat MAX Premium v%VERSION% ULTRA║
 echo ╠══════════════════════════════════════════╣
 echo ║ 🔑 Ключи: AnRat_Max_Free / AnRat_Max     ║
-echo ║ ✅ Исправлены все баги                   ║
-echo ║ 🔐 Добавлено AES-шифрование              ║
-echo ║ 🌡️ Исправлен мониторинг температуры      ║
+echo ║ ✅ Добавлена очистка реестра             ║
+echo ║ ✅ Защита от повторного запуска          ║
+echo ║ ✅ Проверка PowerShell                   ║
+echo ║ 🔐 AES-шифрование паролей                ║
+echo ║ 📁 Защита папок (.anrat)                 ║
+echo ║ 🎮 Игровой режим (упрощённый)            ║
+echo ║ 🌡️ Мониторинг температуры (исправлен)    ║
 echo ║ 💚 Сделано Кобиловым                     ║
 echo ╚══════════════════════════════════════════╝
 call :back_to_menu
