@@ -165,12 +165,62 @@
             margin: 30px 0;
             border-radius: 8px;
         }
+        /* Блок истории обновлений */
+        .changelog {
+            background: rgba(0,0,0,0.5);
+            border-radius: 10px;
+            padding: 25px;
+            margin: 40px 0;
+            border: 1px solid #00ff00;
+        }
+        .changelog h3 {
+            color: #00ff00;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .version {
+            border-left: 3px solid #00ff00;
+            margin-bottom: 20px;
+            padding-left: 15px;
+        }
+        .version .ver {
+            color: #00ff00;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .version .date {
+            color: #888;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        .version ul {
+            margin-top: 8px;
+            margin-left: 20px;
+            color: #ccc;
+        }
+        .version li {
+            margin: 5px 0;
+        }
+        .current-version {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #333;
+            color: #00ff00;
+            font-size: 16px;
+        }
         .footer {
             text-align: center;
-            margin-top: 50px;
-            padding: 20px;
-            border-top: 1px solid #333;
+            padding: 40px 0;
             color: #666;
+            border-top: 1px solid #333;
+            margin-top: 50px;
+        }
+        .made {
+            color: #00ff00;
+            font-size: 18px;
+            margin-bottom: 10px;
         }
         @media (max-width: 768px) {
             .logo pre { font-size: 8px; }
@@ -248,6 +298,77 @@
         <p>✅ После запуска следуй инструкциям в меню.</p>
     </div>
 
+    <!-- БЛОК ИСТОРИИ ОБНОВЛЕНИЙ -->
+    <div class="changelog">
+        <h3>📋 История обновлений AnRat</h3>
+        
+        <div class="version">
+            <span class="ver">v5.0 ULTRA</span>
+            <span class="date">— 19 апреля 2026</span>
+            <ul>
+                <li>➕ Добавлена очистка реестра (пункт 17)</li>
+                <li>➕ Защита от повторного запуска программы</li>
+                <li>➕ Проверка наличия PowerShell перед запуском</li>
+                <li>➕ Логирование всех действий в %userprofile%\AnRat.log</li>
+                <li>🔧 Улучшена очистка временных файлов (удаляются и папки)</li>
+                <li>🔧 Исправлены мелкие баги</li>
+            </ul>
+        </div>
+
+        <div class="version">
+            <span class="ver">v4.0</span>
+            <span class="date">— 18 апреля 2026</span>
+            <ul>
+                <li>➕ Гибрид версий 3.0 и 3.1</li>
+                <li>➕ Улучшено получение даты через PowerShell</li>
+                <li>➕ Упрощён игровой режим (SCHEME_MIN / SCHEME_BALANCED)</li>
+                <li>🔧 Исправлен мониторинг температуры</li>
+                <li>🔧 Исправлено создание курсора (Icon.Save)</li>
+            </ul>
+        </div>
+
+        <div class="version">
+            <span class="ver">v3.0</span>
+            <span class="date">— 17 апреля 2026</span>
+            <ul>
+                <li>➕ Полностью переработан код</li>
+                <li>➕ AES-шифрование для менеджера паролей</li>
+                <li>➕ Защита папок (.anrat архив)</li>
+                <li>➕ Мониторинг температуры через PowerShell</li>
+                <li>➕ Wi-Fi пароли работают на русской и английской Windows</li>
+                <li>➕ Сайт с отзывами и счётчиком посещений</li>
+            </ul>
+        </div>
+
+        <div class="version">
+            <span class="ver">v2.0</span>
+            <span class="date">— 16 апреля 2026</span>
+            <ul>
+                <li>➕ Добавлена проверка прав администратора</li>
+                <li>➕ Автообновление через GitHub</li>
+                <li>➕ Исправлена лицензия (дни вместо секунд)</li>
+                <li>➕ Курсор AnRat</li>
+            </ul>
+        </div>
+
+        <div class="version">
+            <span class="ver">v1.0</span>
+            <span class="date">— 15 апреля 2026</span>
+            <ul>
+                <li>🎉 Первый релиз AnRat</li>
+                <li>➕ Базовые настройки Windows</li>
+                <li>➕ Премиум функции</li>
+                <li>➕ Игровой режим</li>
+                <li>➕ Менеджер паролей</li>
+                <li>➕ Темы оформления</li>
+            </ul>
+        </div>
+
+        <div class="current-version">
+            🔥 Текущая версия: <strong>AnRat 5.0 ULTRA</strong> | Последнее обновление: 19.04.2026
+        </div>
+    </div>
+
     <div class="footer">
         <div class="made">СДЕЛАНО КОБИЛОВЫМ</div>
         <div>AnRat OS — безопасность, которой можно доверять</div>
@@ -312,7 +433,7 @@
     }
     loadReviews();
 
-    // ФИНАЛЬНЫЙ КОД ANRAT 5.0 ULTRA
+    // ПОЛНЫЙ КОД ANRAT 5.0 ULTRA
     const fullCode = `@echo off
 setlocal enabledelayedexpansion
 chcp 1251 > nul 2>&1
@@ -544,7 +665,7 @@ if "%choice%"=="19" goto :end
 goto main_menu
 
 :: ========================================
-:: ОЧИСТКА РЕЕСТРА (НОВОЕ!)
+:: ОЧИСТКА РЕЕСТРА
 :: ========================================
 :clean_registry
 if "%IS_PREMIUM%"=="0" (echo ❌ Только Premium & call :back_to_menu & exit /b)
@@ -557,12 +678,10 @@ echo.
 echo   Удаление мусорных ключей реестра...
 echo   Это может занять некоторое время.
 echo.
-:: Удаление временных ключей
 reg delete "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\RecentDocs" /f >nul 2>&1
 reg delete "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\RunMRU" /f >nul 2>&1
 reg delete "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\TypedPaths" /f >nul 2>&1
 reg delete "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\WordWheelQuery" /f >nul 2>&1
-:: Удаление старых записей обновлений
 reg delete "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\WindowsUpdate\\Services\\Pending" /f >nul 2>&1
 echo.
 echo ✅ Очистка реестра завершена!
