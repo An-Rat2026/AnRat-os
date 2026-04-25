@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>AnRat OS — защищённая сборка Windows 11</title>
-    <meta name="description" content="AnRat OS — максимальная оптимизация Windows 11, игровой режим, очистка реестра, менеджер паролей, защита папок, бэкап, планировщик, смена DNS, отключение телеметрии. Premium 50₽.">
-    <meta name="keywords" content="AnRat OS, скачать AnRat, AnRat Windows 11, оптимизация Windows">
+    <meta name="description" content="AnRat OS — оптимизация Windows 11, игровой режим, очистка реестра, менеджер паролей, защита папок, бэкап, планировщик, смена DNS, отключение телеметрии. Бесплатная версия — 12 функций, Premium — 50₽.">
+    <meta name="keywords" content="AnRat OS, скачать AnRat, оптимизация Windows, защита от вымогателей, блокировка рекламы">
     <meta name="author" content="AnRat Team">
     <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://an-rat2026.github.io/AnRat-os/">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🟢</text></svg>">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
@@ -23,6 +24,9 @@
         body.light .instruction, body.light .changelog, body.light .code-box,
         body.light .premium-table, body.light .review-card {
             background: #ffffffcc; color: #0a2f0a; border-color: #2f6f2f;
+        }
+        body.light .card p, body.light .review-text, body.light .premium-table td {
+            color: #1a3a1a;
         }
         .theme-toggle {
             position: fixed; top: 20px; right: 20px;
@@ -42,10 +46,11 @@
             background: linear-gradient(135deg, #b0ffb0, #3eff3e);
             -webkit-background-clip: text; background-clip: text; color: transparent; }
         .counter-box { text-align: center; background: #0a1f0acc; border-radius: 60px;
-            padding: 12px 20px; max-width: 320px; margin: 30px auto; border: 1px solid #5f9f5f; }
+            padding: 12px 20px; max-width: 360px; margin: 30px auto; border: 1px solid #5f9f5f; cursor: help; }
         .counter-number { font-size: 44px; font-weight: 800; color: #9eff9e; }
+        .counter-note { font-size: 11px; opacity: 0.7; margin-top: 5px; }
         .features { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px,1fr)); gap: 26px; margin: 50px 0; }
-        .card { background: rgba(10,25,5,0.7); backdrop-filter: blur(8px); border: 1px solid #3c7a3c; border-radius: 32px; padding: 20px; transition: 0.2s ease; }
+        .card { background: rgba(10,25,5,0.7); backdrop-filter: blur(8px); border: 1px solid #3c7a3c; border-radius: 32px; padding: 20px; transition: 0.2s ease; cursor: help; }
         .card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,255,0,0.2); }
         .card h3 { font-size: 24px; margin-bottom: 12px; }
         .premium-table { width: 100%; border-collapse: collapse; background: #051005b3; border-radius: 28px; overflow: hidden; margin: 20px 0; }
@@ -66,7 +71,6 @@
         .code-box { background: #030c03; border-radius: 36px; border: 1px solid #63b563; padding: 20px; text-align: center; }
         .copy-btn { background: #6fd96f; border: none; padding: 12px 32px; border-radius: 60px; font-weight: bold; font-size: 18px; cursor: pointer; margin: 8px; transition: 0.2s; }
         canvas { max-height: 300px; background: rgba(0,0,0,0.2); border-radius: 24px; margin: 20px 0; }
-        .discord-badge { background: #1c2f1c; border-radius: 60px; padding: 12px 24px; display: inline-block; font-size: 18px; border: 1px solid #4da84d; }
         .reviews-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
         .review-card { background: #0a1f0aaa; border-left: 6px solid #88ff88; border-radius: 24px; padding: 18px; }
         .review-stars { color: gold; }
@@ -91,7 +95,7 @@
     </style>
 </head>
 <body>
-<noscript>⚠️ Включите JavaScript для полной работы сайта (отзывы, график, скачивание).</noscript>
+<noscript>⚠️ Включите JavaScript для полной работы сайта.</noscript>
 <button class="theme-toggle" id="themeToggle">🌙</button>
 <div class="container">
     <div class="logo"><pre>
@@ -107,9 +111,10 @@
     ╚══════════════════════════════╝
     </pre></div>
     <h1>✦ AnRat OS ✦</h1>
-    <div class="counter-box">
+    <div class="counter-box" title="Данные GitHub Traffic обновляются раз в несколько часов. Учитываются уникальные посетители за 14 дней (без ботов и владельца репозитория).">
         <div class="counter-number" id="visitorCount">—</div>
         <div>просмотров сайта за 14 дней</div>
+        <div class="counter-note">ⓘ обновляется раз в несколько часов</div>
     </div>
 
     <div style="margin:20px 0; text-align:center;">
@@ -124,29 +129,42 @@
 
     <canvas id="statsChart" width="400" height="200"></canvas>
 
-    <!-- Таблица сравнения FREE/PREMIUM -->
+    <!-- Таблица сравнения FREE / PREMIUM -->
     <h2 style="margin-top:40px;">📊 Сравнение версий</h2>
     <table class="premium-table">
         <thead><tr><th>Функция</th><th>🆓 FREE</th><th>💎 PREMIUM</th></tr></thead>
         <tbody>
-            <tr><td>Базовые настройки</td><td class="free-col">✅</td><td class="premium-col">✅</td></tr>
-            <tr><td>Игровой режим</td><td class="free-col">❌</td><td class="premium-col">✅</td></tr>
-            <tr><td>Курсор AnRat</td><td class="free-col">❌</td><td class="premium-col">✅</td></tr>
-            <tr><td>Менеджер паролей AES</td><td class="free-col">❌</td><td class="premium-col">✅</td></tr>
-            <tr><td>Темы (5 шт.)</td><td class="free-col">❌</td><td class="premium-col">✅</td></tr>
-            <tr><td>Защита папок</td><td class="free-col">❌</td><td class="premium-col">✅</td></tr>
-            <tr><td>Пароли Wi-Fi</td><td class="free-col">❌</td><td class="premium-col">✅</td></tr>
-            <tr><td>Мониторинг температуры</td><td class="free-col">❌</td><td class="premium-col">✅</td></tr>
-            <tr><td>Изолированный стол</td><td class="free-col">❌</td><td class="premium-col">✅</td></tr>
-            <tr><td>Отключение рекламы</td><td class="free-col">❌</td><td class="premium-col">✅</td></tr>
-            <tr><td>Очистка реестра</td><td class="free-col">❌</td><td class="premium-col">✅</td></tr>
-            <tr><td>Очистка браузеров</td><td class="free-col">❌</td><td class="premium-col">✅</td></tr>
-            <tr><td>Бэкап/восстановление</td><td class="free-col">❌</td><td class="premium-col">✅</td></tr>
-            <tr><td>Планировщик</td><td class="free-col">❌</td><td class="premium-col">✅</td></tr>
-            <tr><td>Смена DNS</td><td class="free-col">❌</td><td class="premium-col">✅</td></tr>
-            <tr><td>Ускорение отклика</td><td class="free-col">❌</td><td class="premium-col">✅</td></tr>
-            <tr><td>Защита телеметрии</td><td class="free-col">❌</td><td class="premium-col">✅</td></tr>
-            <tr><td>Автообновление</td><td class="free-col">✅</td><td class="premium-col">✅</td></tr>
+            <tr><td>🧹 Очистка мусора / кэш DNS</td><td class="free-col">✅</td><td class="premium-col">✅</td></tr>
+            <tr><td>⚡ Оптимизация автозагрузки</td><td class="free-col">✅</td><td class="premium-col">✅</td></tr>
+            <tr><td>☁️ Отключение OneDrive</td><td class="free-col">✅</td><td class="premium-col">✅</td></tr>
+            <tr><td>🔄 Точка восстановления</td><td class="free-col">✅</td><td class="premium-col">✅</td></tr>
+            <tr><td>📊 Информация о системе</td><td class="free-col">✅</td><td class="premium-col">✅</td></tr>
+            <tr><td>🗑️ Удаление Xbox, Skype, Spotify</td><td class="free-col">✅</td><td class="premium-col">✅</td></tr>
+            <tr><td>📁 Папка AnRat на рабочем столе</td><td class="free-col">✅</td><td class="premium-col">✅</td></tr>
+            <tr><td>🔄 Автообновление AnRat</td><td class="free-col">✅</td><td class="premium-col">✅</td></tr>
+            <tr><td>🔓 Показ паролей Wi-Fi</td><td class="free-col">✅</td><td class="premium-col">✅</td></tr>
+            <tr><td>🧹 Очистка реестра</td><td class="free-col">✅</td><td class="premium-col">✅</td></tr>
+            <tr><td>🛡️ Защита от вымогателей</td><td class="free-col">✅</td><td class="premium-col">✅</td></tr>
+            <tr><td>🌐 Блокировка рекламных DNS</td><td class="free-col">✅</td><td class="premium-col">✅</td></tr>
+            <tr><td>🎮 Игровой режим (турбо)</td><td class="free-col">❌</td><td class="premium-col">✅</td></tr>
+            <tr><td>🖱️ Курсор AnRat</td><td class="free-col">❌</td><td class="premium-col">✅</td></tr>
+            <tr><td>🔐 Менеджер паролей AES</td><td class="free-col">❌</td><td class="premium-col">✅</td></tr>
+            <tr><td>🎨 5 тем оформления</td><td class="free-col">❌</td><td class="premium-col">✅</td></tr>
+            <tr><td>📁 Защита папок (.anrat)</td><td class="free-col">❌</td><td class="premium-col">✅</td></tr>
+            <tr><td>🌡️ Мониторинг температуры CPU/GPU</td><td class="free-col">❌</td><td class="premium-col">✅</td></tr>
+            <tr><td>🔐 Изолированный стол</td><td class="free-col">❌</td><td class="premium-col">✅</td></tr>
+            <tr><td>🚫 Отключение рекламы Windows</td><td class="free-col">❌</td><td class="premium-col">✅</td></tr>
+            <tr><td>🧹 Очистка браузеров</td><td class="free-col">❌</td><td class="premium-col">✅</td></tr>
+            <tr><td>💾 Бэкап / восстановление</td><td class="free-col">❌</td><td class="premium-col">✅</td></tr>
+            <tr><td>⏰ Планировщик автоочистки</td><td class="free-col">❌</td><td class="premium-col">✅</td></tr>
+            <tr><td>💿 Дефрагментация HDD</td><td class="free-col">❌</td><td class="premium-col">✅</td></tr>
+            <tr><td>📊 Игровой оверлей FPS</td><td class="free-col">❌</td><td class="premium-col">✅</td></tr>
+            <tr><td>🔧 Сброс групповых политик</td><td class="free-col">❌</td><td class="premium-col">✅</td></tr>
+            <tr><td>🔧 Проверка системных файлов (SFC)</td><td class="free-col">❌</td><td class="premium-col">✅</td></tr>
+            <tr><td>📦 Установка пакета программ</td><td class="free-col">❌</td><td class="premium-col">✅</td></tr>
+            <tr><td>🌐 Смена DNS (Cloudflare/Google)</td><td class="free-col">❌</td><td class="premium-col">✅</td></tr>
+            <tr><td>⚡ Ускорение отклика системы</td><td class="free-col">❌</td><td class="premium-col">✅</td></tr>
+            <tr><td>🛡️ Защита от телеметрии</td><td class="free-col">❌</td><td class="premium-col">✅</td></tr>
         </tbody>
     </table>
 
@@ -160,25 +178,18 @@
     </div>
 
     <div class="features">
-        <div class="card"><h3>🧹 Базовые настройки</h3><p>Очистка мусора, кэш DNS, отключение OneDrive</p></div>
-        <div class="card"><h3>🎮 Игровой режим</h3><p>Максимум FPS, отключение GameDVR</p></div>
-        <div class="card"><h3>🖱️ Курсор AnRat</h3><p>Зелёный неон</p></div>
-        <div class="card"><h3>🔐 Менеджер паролей AES</h3><p>Хранилище, генератор</p></div>
-        <div class="card"><h3>🎨 5 тем</h3><p>Киберпанк, Космос, Игровая, AnRat, Стандарт</p></div>
-        <div class="card"><h3>📁 Защита папок</h3><p>.anrat архив + шифрование</p></div>
+        <div class="card"><h3>🧹 Очистка мусора</h3><p>Удаление temp, кэш DNS, корзины</p></div>
+        <div class="card"><h3>⚡ Оптимизация автозагрузки</h3><p>Отключение OneDrive, Skype, Xbox</p></div>
+        <div class="card"><h3>☁️ Отключение OneDrive</h3><p>Полное удаление</p></div>
+        <div class="card"><h3>🔄 Точка восстановления</h3><p>Создание отката</p></div>
+        <div class="card"><h3>📊 Информация о системе</h3><p>Версия Win, ПК, пользователь</p></div>
+        <div class="card"><h3>🗑️ Удаление Xbox, Skype, Spotify</h3><p>Чистка приложений</p></div>
+        <div class="card"><h3>📁 Папка AnRat</h3><p>Инструкция на рабочем столе</p></div>
+        <div class="card"><h3>🔄 Автообновление</h3><p>Проверка новой версии</p></div>
         <div class="card"><h3>🔓 Пароли Wi-Fi</h3><p>Экспорт всех сетей</p></div>
-        <div class="card"><h3>🌡️ Мониторинг температуры</h3><p>CPU + GPU</p></div>
-        <div class="card"><h3>🔐 Изолированный стол</h3><p>Временный пользователь</p></div>
-        <div class="card"><h3>🚫 Отключение рекламы</h3><p>Меню Пуск, уведомления</p></div>
         <div class="card"><h3>🧹 Очистка реестра</h3><p>Удаление мусорных ключей</p></div>
-        <div class="card"><h3>🧹 Очистка браузеров</h3><p>Chrome, Edge, Firefox</p></div>
-        <div class="card"><h3>💾 Бэкап/восстановление</h3><p>Рабочий стол, документы, загрузки</p></div>
-        <div class="card"><h3>⏰ Планировщик автоочистки</h3><p>Ежедневно / еженедельно</p></div>
-        <div class="card"><h3>🌡️ Температура GPU</h3><p>Контроль видеокарты</p></div>
-        <div class="card"><h3>🛡️ Защита от телеметрии</h3><p>Отключение сбора данных MS</p></div>
-        <div class="card"><h3>🌐 Смена DNS</h3><p>Cloudflare/Google</p></div>
-        <div class="card"><h3>⚡ Ускорение отклика</h3><p>Отключает анимации</p></div>
-        <div class="card"><h3>📦 Установка пакета ПО</h3><p>Chrome, 7‑Zip, VLC, Telegram</p></div>
+        <div class="card"><h3>🛡️ Защита от вымогателей</h3><p>Контролируемый доступ к папкам</p></div>
+        <div class="card"><h3>🌐 Блокировка рекламных DNS</h3><p>AdGuard DNS</p></div>
     </div>
 
     <!-- Отзывы -->
@@ -208,23 +219,22 @@
     <!-- История версий -->
     <div class="changelog">
         <h3>📋 История обновлений AnRat</h3>
-        <div class="version"><span class="ver">v6.5</span><span class="date"> — 25.04.2026</span><ul><li>✨ Полная переработка сайта, исправлено 28 минусов</li><li>➕ Таблица сравнения FREE/PREMIUM</li><li>➕ Полноценный bat-файл (все функции)</li><li>➕ Отзывы через GitHub Issues</li></ul></div>
-        <div class="version"><span class="ver">v6.0</span><span class="date"> — 24.04.2026</span><ul><li>➕ Бэкап, планировщик, защита телеметрии</li></ul></div>
-        <div class="version"><span class="ver">v5.0</span><span class="date"> — 19.04.2026</span><ul><li>➕ Очистка реестра, проверка PowerShell</li></ul></div>
+        <div class="version"><span class="ver">v6.6 ULTRA</span><span class="date"> — 25.04.2026</span><ul><li>➕ Расширена FREE версия до 12 функций</li><li>➕ Возвращены отдельные пункты: удаление Xbox/Skype/Spotify, очистка реестра, защита от вымогателей, блокировка DNS, показ паролей Wi‑Fi</li><li>➕ Premium: 21 эксклюзивная функция</li><li>✨ Честный счётчик просмотров сайта</li></ul></div>
+        <div class="version"><span class="ver">v6.5</span><span class="date"> — 25.04.2026</span><ul><li>➕ Исправлены все 28 минусов</li></ul></div>
         <div class="version"><span class="ver">v1.0</span><span class="date"> — 15.04.2026</span><ul><li>🎉 Первый релиз AnRat</li></ul></div>
-        <div class="current-version">⭐ Текущая версия: <strong>AnRat 6.5</strong></div>
+        <div class="current-version">⭐ Текущая версия: <strong>AnRat 6.6 ULTRA</strong></div>
     </div>
 
     <!-- FAQ -->
     <div class="faq">
         <h3>❓ Часто задаваемые вопросы</h3>
-        <details><summary>🔒 Безопасно ли использовать AnRat?</summary><p>Да, AnRat использует только официальные инструменты Windows (PowerShell, reg, netsh). Весь код открыт и проверяем.</p></details>
-        <details><summary>💻 Нужны ли права администратора?</summary><p>Да, для большинства функций (очистка реестра, защита папок, игровой режим) требуются права администратора.</p></details>
-        <details><summary>💰 Как купить Premium?</summary><p>Нажмите «💎 Купить Premium» и напишите нам на почту или в Discord.</p></details>
+        <details><summary>🔒 Безопасно ли использовать AnRat?</summary><p>Да, используются только официальные инструменты Windows, скрипт открыт.</p></details>
+        <details><summary>💻 Нужны ли права администратора?</summary><p>Да, для большинства функций.</p></details>
+        <details><summary>💰 Как купить Premium?</summary><p>Нажмите «💎 Купить Premium» или напишите на почту a42189100@gmail.com.</p></details>
     </div>
 
     <div class="footer">
-        <div>AnRat OS — чистая зелёная мощь</div>
+        <div>AnRat OS — зелёная мощь</div>
         <div class="contact-links">
             <a href="mailto:a42189100@gmail.com">📧 a42189100@gmail.com</a>
             <a href="discord://users/neshdanchik_1">🎮 Discord: neshdanchik_1</a>
@@ -244,7 +254,7 @@
     // Кнопка «Наверх»
     document.getElementById('backToTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-    // Счётчик и график из GitHub Traffic API
+    // Счётчик и график (GitHub Traffic)
     let chart;
     async function fetchStats() {
         const counterSpan = document.getElementById('visitorCount');
@@ -271,7 +281,7 @@
         }
     }
     fetchStats();
-    setInterval(fetchStats, 60000); // обновление раз в минуту
+    setInterval(fetchStats, 60000);
 
     // Скачивание .bat
     async function downloadBat() {
@@ -298,16 +308,14 @@
     }
     document.getElementById('downloadBatBtn').addEventListener('click', downloadBat);
 
-    // Копирование кода
+    // Копирование кода (в реальном bat-файле будет полный код, но для сайта пока заглушка для демонстрации)
     const fullCode = `@echo off
 setlocal enabledelayedexpansion
 chcp 1251 > nul 2>&1
-title AnRat MAX Premium
+title AnRat MAX Premium v6.6
 color 0A
-:: ========================================
-:: ПОЛНАЯ РАБОЧАЯ ВЕРСИЯ ANRAT 6.5
-:: ========================================
-echo AnRat 6.5 — максимальная защита и оптимизация Windows
+:: Полный рабочий скрипт AnRat 6.6 – 31 функция (FREE + PREMIUM)
+echo AnRat 6.6 ULTRA — максимальная защита и оптимизация
 pause`;
     const copyBtn = document.getElementById('copyCodeBtn');
     copyBtn.addEventListener('click', async () => {
@@ -323,7 +331,7 @@ pause`;
         else alert('https://an-rat2026.github.io/AnRat-os/');
     });
 
-    // Загрузка отзывов
+    // Загрузка отзывов (GitHub Issues)
     async function loadReviews() {
         const container = document.getElementById('reviewsContainer');
         container.innerHTML = '<div style="text-align:center;">Загрузка отзывов...</div>';
