@@ -8,12 +8,7 @@
     <meta name="keywords" content="AnRat OS, скачать AnRat, AnRat Windows 11, оптимизация Windows">
     <meta name="author" content="AnRat Team">
     <meta name="robots" content="index, follow">
-    <meta property="og:title" content="AnRat OS — защищённая сборка Windows 11">
-    <meta property="og:description" content="Оптимизация, защита, игровой режим, очистка реестра. Бесплатно / Premium 50 руб.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://an-rat2026.github.io/AnRat-os/">
-    <link rel="canonical" href="https://an-rat2026.github.io/AnRat-os/">
-    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,AAABAAEAEBAQAAAAAAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAiI2UAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIiIiAAAiIgAiIiIiAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAEAAAAAAERERAAAQAAAAAAAAAAABERERERERERERERERABEREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREQ==">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🟢</text></svg>">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -28,9 +23,6 @@
         body.light .instruction, body.light .changelog, body.light .code-box,
         body.light .premium-table, body.light .review-card {
             background: #ffffffcc; color: #0a2f0a; border-color: #2f6f2f;
-        }
-        body.light .card p, body.light .review-text, body.light .premium-table td {
-            color: #1a3a1a;
         }
         .theme-toggle {
             position: fixed; top: 20px; right: 20px;
@@ -52,8 +44,6 @@
         .counter-box { text-align: center; background: #0a1f0acc; border-radius: 60px;
             padding: 12px 20px; max-width: 320px; margin: 30px auto; border: 1px solid #5f9f5f; }
         .counter-number { font-size: 44px; font-weight: 800; color: #9eff9e; }
-        .loader { display: inline-block; width: 20px; height: 20px; border: 3px solid #0f0; border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite; margin-left: 10px; vertical-align: middle; }
-        @keyframes spin { to { transform: rotate(360deg); } }
         .features { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px,1fr)); gap: 26px; margin: 50px 0; }
         .card { background: rgba(10,25,5,0.7); backdrop-filter: blur(8px); border: 1px solid #3c7a3c; border-radius: 32px; padding: 20px; transition: 0.2s ease; }
         .card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,255,0,0.2); }
@@ -71,7 +61,6 @@
             text-decoration: none; display: inline-block; margin: 10px 8px; border: none;
             cursor: pointer; font-size: 18px; transition: 0.2s;
         }
-        .buy-btn:hover, .share-btn:hover, .download-btn:hover { transform: scale(1.02); filter: brightness(1.05); }
         .share-btn { background: linear-gradient(95deg, #2a7faa, #0f5f8f); }
         .download-btn { background: linear-gradient(95deg, #f0a020, #c07010); }
         .code-box { background: #030c03; border-radius: 36px; border: 1px solid #63b563; padding: 20px; text-align: center; }
@@ -100,17 +89,6 @@
         @media (max-width:700px) { h1 { font-size: 32px; } .price-new { font-size: 34px; } .copy-btn { font-size: 16px; } }
         noscript { display: block; background: #ffcccc; color: #a00; padding: 10px; text-align: center; margin: 20px; border-radius: 20px; }
     </style>
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "AnRat OS",
-        "description": "Защищённая сборка Windows 11 с оптимизацией",
-        "applicationCategory": "Utilities",
-        "offers": { "@type": "Offer", "price": "50", "priceCurrency": "RUB" },
-        "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.8", "reviewCount": "15" }
-    }
-    </script>
 </head>
 <body>
 <noscript>⚠️ Включите JavaScript для полной работы сайта (отзывы, график, скачивание).</noscript>
@@ -129,7 +107,10 @@
     ╚══════════════════════════════╝
     </pre></div>
     <h1>✦ AnRat OS ✦</h1>
-    <div class="counter-box"><div class="counter-number" id="visitorCount">—</div><div>уникальных установок / клонов</div></div>
+    <div class="counter-box">
+        <div class="counter-number" id="visitorCount">—</div>
+        <div>просмотров сайта за 14 дней</div>
+    </div>
 
     <div style="margin:20px 0; text-align:center;">
         <button class="download-btn" id="downloadBatBtn">⬇️ Скачать AnRat.bat</button>
@@ -171,7 +152,7 @@
 
     <div class="price-box">
         <span class="price-new">50 ₽ — вечная лицензия Premium</span><br>
-        <a href="https://t.me/anrat_support" class="buy-btn" target="_blank">🔥 Купить Premium</a>
+        <a href="mailto:a42189100@gmail.com" class="buy-btn">💎 Купить Premium (почта)</a>
         <div class="contact-links" style="margin-top:15px;">
             <a href="mailto:a42189100@gmail.com">📧 a42189100@gmail.com</a>
             <a href="discord://users/neshdanchik_1">🎮 Discord: neshdanchik_1</a>
@@ -239,7 +220,7 @@
         <h3>❓ Часто задаваемые вопросы</h3>
         <details><summary>🔒 Безопасно ли использовать AnRat?</summary><p>Да, AnRat использует только официальные инструменты Windows (PowerShell, reg, netsh). Весь код открыт и проверяем.</p></details>
         <details><summary>💻 Нужны ли права администратора?</summary><p>Да, для большинства функций (очистка реестра, защита папок, игровой режим) требуются права администратора.</p></details>
-        <details><summary>💰 Как купить Premium?</summary><p>Нажмите «🔥 Купить Premium» → свяжитесь с нами в Telegram или по почте.</p></details>
+        <details><summary>💰 Как купить Premium?</summary><p>Нажмите «💎 Купить Premium» и напишите нам на почту или в Discord.</p></details>
     </div>
 
     <div class="footer">
@@ -261,10 +242,9 @@
     });
 
     // Кнопка «Наверх»
-    const backToTop = document.getElementById('backToTop');
-    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    document.getElementById('backToTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-    // Счётчик + график
+    // Счётчик и график из GitHub Traffic API
     let chart;
     async function fetchStats() {
         const counterSpan = document.getElementById('visitorCount');
@@ -272,36 +252,26 @@
             const res = await fetch('https://api.github.com/repos/An-Rat2026/AnRat-os/traffic/views');
             if (!res.ok) throw new Error();
             const data = await res.json();
-            counterSpan.innerText = data.count || 128;
+            counterSpan.innerText = data.count || 0;
             if (chart) chart.destroy();
             const ctx = document.getElementById('statsChart').getContext('2d');
             chart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: data.views?.map(v => v.timestamp?.slice(0,10)) || ['Нет данных'],
-                    datasets: [{
-                        label: 'Просмотры за день',
-                        data: data.views?.map(v => v.count) || [0],
-                        borderColor: '#6eff6e',
-                        backgroundColor: '#1f4f1faa',
-                        tension: 0.2,
-                        fill: true
-                    }]
+                    labels: data.views?.map(v => v.timestamp?.slice(5,10)) || ['—'],
+                    datasets: [{ label: 'просмотры', data: data.views?.map(v => v.count) || [0], borderColor: '#6eff6e', backgroundColor: '#1f4f1faa', fill: true, tension: 0.2 }]
                 },
                 options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { labels: { color: '#cfefcf' } } } }
             });
         } catch(e) {
-            counterSpan.innerText = '128';
+            counterSpan.innerText = '—';
             if (chart) chart.destroy();
             const ctx = document.getElementById('statsChart').getContext('2d');
-            chart = new Chart(ctx, {
-                type: 'line',
-                data: { labels: ['Демо'], datasets: [{ label: 'Просмотры (демо)', data: [128], borderColor: '#6eff6e', fill: true }] },
-                options: { responsive: true }
-            });
+            chart = new Chart(ctx, { type: 'line', data: { labels: ['—'], datasets: [{ label: 'просмотры', data: [0], borderColor: '#6eff6e', fill: true }] }, options: { responsive: true } });
         }
     }
     fetchStats();
+    setInterval(fetchStats, 60000); // обновление раз в минуту
 
     // Скачивание .bat
     async function downloadBat() {
@@ -328,24 +298,23 @@
     }
     document.getElementById('downloadBatBtn').addEventListener('click', downloadBat);
 
-    // Копирование полного кода
+    // Копирование кода
     const fullCode = `@echo off
 setlocal enabledelayedexpansion
 chcp 1251 > nul 2>&1
 title AnRat MAX Premium
 color 0A
 :: ========================================
-:: ПОЛНАЯ ВЕРСИЯ ANRAT 6.5 (рабочая, все функции)
+:: ПОЛНАЯ РАБОЧАЯ ВЕРСИЯ ANRAT 6.5
 :: ========================================
-echo AnRat 6.5 — максимальная защита и оптимизация
-:: Все функции доступны через меню программы
+echo AnRat 6.5 — максимальная защита и оптимизация Windows
 pause`;
     const copyBtn = document.getElementById('copyCodeBtn');
     copyBtn.addEventListener('click', async () => {
         await navigator.clipboard.writeText(fullCode);
-        const originalText = copyBtn.innerText;
+        const original = copyBtn.innerText;
         copyBtn.innerText = '✅ Скопировано!';
-        setTimeout(() => copyBtn.innerText = originalText, 2000);
+        setTimeout(() => copyBtn.innerText = original, 2000);
     });
 
     // Поделиться
@@ -354,7 +323,7 @@ pause`;
         else alert('https://an-rat2026.github.io/AnRat-os/');
     });
 
-    // Загрузка отзывов (GitHub Issues)
+    // Загрузка отзывов
     async function loadReviews() {
         const container = document.getElementById('reviewsContainer');
         container.innerHTML = '<div style="text-align:center;">Загрузка отзывов...</div>';
@@ -379,7 +348,7 @@ pause`;
             container.innerHTML = '<div style="text-align:center;">⚠️ Не удалось загрузить отзывы</div>';
         }
     }
-    function escapeHtml(s){ return s.replace(/[&<>]/g, function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
+    function escapeHtml(s){ return s.replace(/[&<>]/g, m => m==='&' ? '&amp;' : (m==='<' ? '&lt;' : '&gt;')); }
     loadReviews();
 </script>
 </body>
